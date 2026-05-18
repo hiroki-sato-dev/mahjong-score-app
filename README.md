@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 麻雀部スコア管理アプリ 要件定義書
 
-## Getting Started
+## 概要
 
-First, run the development server:
+麻雀部のメンバーが半荘ごとのスコアを記録・管理し、成績やランキングを確認できるWebアプリケーション。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 技術スタック
+
+| 項目 | 技術 |
+|---|---|
+| フレームワーク | Next.js (App Router) |
+| 言語 | TypeScript |
+| スタイリング | Tailwind CSS + SCSS |
+| 状態管理 | Zustand |
+| テスト | Vitest + React Testing Library |
+
+---
+
+## 機能要件（MoSCoW法）
+
+### Must（必須）
+
+| 機能 | 詳細 |
+|---|---|
+| 部員登録・ログイン | メール＋パスワード認証 |
+| 半荘スコア入力・記録 | 4人の点数入力、日付・メンバー記録 |
+| 成績確認 | 日別・累計の成績表示（タブ切り替え） |
+| 収支計算 | 下記ルールに基づく自動計算 |
+| ランキング | 累計ポイント順 |
+| ロール管理 | 幹部 / 部員のロール分け |
+| チップの有無設定 | 半荘ごとにチップあり/なしを選択 |
+
+#### 収支計算ルール
+
+- 1000点 = 50P
+- チップ = 100P（1枚あたり）
+- 返し = 30000点
+- ウマ（1着 +20P / 2着 +10P / 3着 -10P / 4着 -20P）
+
+### Should（重要だがなくてもOK）
+
+- 対戦履歴の検索・フィルター（日付・メンバーで絞り込み）
+- プロフィール編集（表示名）
+
+### Could（あると嬉しい）
+
+- 成績グラフ・可視化（Recharts使用予定）
+- 半荘ごとのコメント・メモ機能
+
+### Won't（今回はやらない）
+
+- 複数麻雀部の管理（マルチテナント）
+- プッシュ通知
+- 外部サービス連携（LINE通知等）
+
+---
+
+## ロール定義
+
+| ロール | できること |
+|---|---|
+| 部員 | 閲覧・スコア入力 |
+| 幹部 | 部員の閲覧・スコア入力 ＋ スコア編集・削除・部員管理 |
+
+---
+
+## 画面一覧
+
+| # | 画面名 | 対象 |
+|---|---|---|
+| 1 | ログイン | 全員 |
+| 2 | 部員一覧 | 全員 |
+| 3 | 半荘スコア入力 | 全員 |
+| 4 | 成績確認（日別 / 累計） | 全員 |
+| 5 | ランキング | 全員 |
+| 6 | 幹部用管理画面 | 幹部のみ |
+
+---
+
+## 画面詳細
+
+### 1. ログイン画面
+
+- メールアドレス入力
+- パスワード入力
+- ログインボタン
+- 新規登録リンク
+
+### 2. 部員一覧画面
+
+- 部員名
+- 累計ポイント
+- 試合数
+- 最終対戦日
+
+### 3. 半荘スコア入力画面
+
+- 対戦日付
+- 参加メンバー4人の選択
+- 各自の点数入力
+- チップあり/なし切り替え
+- チップ枚数入力（チップありの場合）
+- 登録ボタン
+
+### 4. 成績確認画面
+
+タブで日別・累計を切り替え（useStateで管理）
+
+**タブ: 日別**
+- 日付選択
+- その日の半荘一覧（対戦メンバー・各自のポイント）
+- 日別収支合計
+
+**タブ: 累計**
+- 期間選択（月別・全期間）
+- 累計ポイント
+- 累計収支
+- 試合数
+
+### 5. ランキング画面
+
+- 順位
+- 部員名
+- 累計ポイント
+- 試合数
+- 平均ポイント（累計 ÷ 試合数）
+- 期間フィルター（月別・全期間）
+
+### 6. 幹部用管理画面
+
+左サイドバーのナビゲーションで切り替え
+
+**部員管理**
+- 部員一覧テーブル
+- 部員追加
+- ロール変更（幹部 / 部員）
+- 部員削除
+
+**スコア管理**
+- 半荘記録一覧テーブル
+- スコア編集
+- 記録削除
+
+---
+
+## 画面遷移
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ログイン
+  └─ ロールで分岐
+       ├─ 部員
+       │    ├─ 部員一覧
+       │    ├─ スコア入力
+       │    ├─ 成績確認（日別タブ / 累計タブ）
+       │    └─ ランキング
+       └─ 幹部
+            ├─ 部員一覧
+            ├─ スコア入力
+            ├─ 成績確認（日別タブ / 累計タブ）
+            ├─ ランキング
+            └─ 管理画面
+                 ├─ 部員管理（サイドバー）
+                 └─ スコア管理（サイドバー）
+```
