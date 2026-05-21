@@ -20,10 +20,43 @@
 - components/ : 共通コンポーネント
 - docs/ : 設計書・デザインファイル
 
-## 設計書
+## ドキュメント構成
 
-- docs/design/ : デザインファイル
-- README.md : 要件定義書
+| ファイル | 内容 |
+|---|---|
+| `docs/spec/SPEC.md` | マスター仕様書（要件・画面定義・計算ルール） |
+| `docs/design/REFERENCE.md` | デザイントークン・コンポーネントProps・型定義・ロジック |
+| `docs/design/hi-fi/` | デザイン原本（ブラウザで視覚確認できるHTMLプロトタイプ） |
+| `DEVELOPMENT.md` | 開発フロー・カスタムコマンドの説明 |
+
+## 開発スタイル
+
+**スペック駆動開発**を採用。詳細は `DEVELOPMENT.md` を参照。
+
+- 機能着手前に `docs/spec/features/<機能名>/` に仕様を書く
+- 実装完了後に `docs/spec/SPEC.md` にマージする
+
+## Git ワークフロー
+
+- ベースブランチは `develop`（`main` は現在使用しない）
+- `feature/<機能名>` で実装 → `/pr` で実装PR → レビュー・マージ → `/spec-done` でドキュメントPR
+- 詳細は `.claude/skills/git-workflow.md` を参照
+
+## カスタムコマンド
+
+| コマンド | 説明 |
+|---|---|
+| `/spec-new <機能名>` | 機能仕様ディレクトリをテンプレート付きで作成 |
+| `/pr <機能名>` | 実装PRを作成（feature/<機能名> → develop） |
+| `/spec-done <機能名>` | 仕様を SPEC.md にマージしてドキュメントPRを作成 |
+| `/doc-sync` | REFERENCE.md を最新の実装に合わせて更新 |
+
+## セッション開始時
+
+新しいセッションでは作業前に以下を読み込むこと：
+1. `docs/spec/SPEC.md` — 現在の仕様・実装状況
+2. `docs/design/REFERENCE.md` — デザイン・型・ロジックの定義
+3. `docs/spec/features/` — 作業中の機能があれば該当ディレクトリ
 
 ## 学習目的・試験範囲
 
