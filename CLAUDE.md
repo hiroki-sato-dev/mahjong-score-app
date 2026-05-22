@@ -29,6 +29,13 @@
 | `docs/design/hi-fi/` | デザイン原本（ブラウザで視覚確認できるHTMLプロトタイプ） |
 | `DEVELOPMENT.md` | 開発フロー・カスタムコマンドの説明 |
 
+## コーディング規約
+
+### TypeScript
+
+- 型定義は `interface` ではなく `type` を使う
+- HTML要素を拡張する場合はインターセクション型を使う: `type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & { ... }`
+
 ## 開発スタイル
 
 **スペック駆動開発**を採用。詳細は `DEVELOPMENT.md` を参照。
