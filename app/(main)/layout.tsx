@@ -1,17 +1,20 @@
 import { Header } from '@/components/ui/Header'
+import { requireUser } from '@/lib/session'
 
 const navItems = [
-  { label: 'メンバー', href: '/members' },
-  { label: 'スコア入力', href: '/score' },
-  { label: '結果', href: '/results' },
+  { label: '部員一覧', href: '/members' },
+  { label: 'スコア入力', href: '/score/new' },
+  { label: '成績', href: '/results' },
   { label: 'ランキング', href: '/ranking' },
+  { label: '管理', href: '/admin/members', executiveOnly: true },
 ]
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+export default async function MainLayout({ children }: { children: React.ReactNode }) {
+  const user = await requireUser()
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header navItems={navItems} />
-      <main className="mx-auto max-w-4xl p-4">{children}</main>
+    <div className="bg-paper min-h-screen">
+      <Header navItems={navItems} userName={user.name} userRole={user.role} />
+      <main className="mx-auto max-w-5xl p-4 md:p-6">{children}</main>
     </div>
   )
 }
