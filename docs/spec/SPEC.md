@@ -162,3 +162,43 @@
                  ├─ 部員管理
                  └─ スコア管理
 ```
+
+---
+
+## 開発環境
+
+### フォーマッター / リンター / pre-commit フック
+
+コード品質を担保するため、ESLint + Prettier + pre-commit フックを整備している。詳細は [docs/dev-env/lint-formatter.md](../dev-env/lint-formatter.md) 参照。
+
+**構成：**
+
+| 項目              | 採用                                                                          |
+| ----------------- | ----------------------------------------------------------------------------- |
+| フォーマッター    | Prettier（`.prettierrc.json`）+ `prettier-plugin-tailwindcss`                 |
+| リンター          | ESLint v9 flat config（`eslint.config.mjs`）                                  |
+| ESLint ベース     | `eslint-config-next`（`core-web-vitals` + `typescript` + `react-hooks` 内包） |
+| Prettier 競合回避 | `eslint-config-prettier`（flat config の末尾）                                |
+| 追加プラグイン    | `eslint-plugin-import`                                                        |
+| pre-commit フック | husky v9 + lint-staged                                                        |
+
+**カスタムルール：**
+
+| ルール                                                 | レベル | 目的                                                 |
+| ------------------------------------------------------ | ------ | ---------------------------------------------------- |
+| `@typescript-eslint/consistent-type-definitions: type` | error  | 型定義は `type` で統一（CLAUDE.md 規約に準拠）       |
+| `no-console` (allow: warn / error)                     | warn   | 本番に `console.log` を残さない                      |
+| `import/order`                                         | error  | builtin → external → internal → 親 → 兄弟 → index 順 |
+
+**npm スクリプト：**
+
+| コマンド               | 用途                      |
+| ---------------------- | ------------------------- |
+| `npm run lint`         | ESLint 実行               |
+| `npm run lint:fix`     | ESLint 自動修正           |
+| `npm run format`       | Prettier で全ファイル整形 |
+| `npm run format:check` | Prettier 整形チェック     |
+
+**pre-commit の流れ：** `git commit` → `.husky/pre-commit` → `npx lint-staged` → ステージ済みファイルだけに `eslint --fix` + `prettier --write` を実行 → 整形結果を自動再ステージ。lint エラーが残る場合はコミット中止。
+
+**除外対象：** `.next/`、`out/`、`build/`、`docs/design/hi-fi/`（デザイン原本HTML）、`prisma/migrations/`、`package-lock.json`
