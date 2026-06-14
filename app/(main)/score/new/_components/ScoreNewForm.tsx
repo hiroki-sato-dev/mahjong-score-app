@@ -96,16 +96,16 @@ export function ScoreNewForm({ members }: Props) {
         {seats.map((seat, idx) => (
           <div
             key={idx}
-            className="border-line grid grid-cols-1 gap-3 rounded-md border p-3 md:grid-cols-[60px_1fr_120px_120px]"
+            className="border-line bg-paper grid grid-cols-1 gap-3 rounded-md border p-3 md:grid-cols-[56px_minmax(200px,1fr)_160px_140px] md:items-end"
           >
-            <div className="bg-felt-soft text-felt flex items-center justify-center rounded-md text-[14px] font-bold">
+            <div className="bg-felt text-surface flex h-10 items-center justify-center self-end rounded-md text-[14px] font-bold">
               {SEAT_LABELS[idx]}
             </div>
             <Field label="部員">
               <select
                 value={seat.userId}
                 onChange={(e) => updateSeat(idx, { userId: e.target.value })}
-                className="border-line-strong h-10 rounded-md border px-3 text-[14px]"
+                className="bg-surface border-line-strong text-ink-1 focus:border-felt h-10 rounded-md border-2 px-3 text-[14px] outline-none"
                 required
               >
                 <option value="">選択</option>
@@ -129,7 +129,8 @@ export function ScoreNewForm({ members }: Props) {
                 value={seat.chipCount}
                 onChange={(e) => updateSeat(idx, { chipCount: e.target.value })}
                 disabled={!withChip}
-                placeholder="0"
+                placeholder={withChip ? '0' : '—'}
+                className={withChip ? '' : 'opacity-50'}
               />
             </Field>
           </div>
