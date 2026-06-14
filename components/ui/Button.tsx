@@ -1,30 +1,35 @@
+type ButtonKind = 'primary' | 'secondary' | 'ghost' | 'danger' | 'danger-ghost'
+type ButtonSize = 'sm' | 'md' | 'lg'
+
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'danger'
-  size?: 'sm' | 'md' | 'lg'
+  kind?: ButtonKind
+  size?: ButtonSize
+}
+
+const kindClasses: Record<ButtonKind, string> = {
+  primary: 'bg-felt text-white hover:bg-felt-deep',
+  secondary: 'bg-surface text-ink-1 border border-line-strong hover:bg-paper',
+  ghost: 'text-ink-2 hover:bg-paper',
+  danger: 'bg-neg text-white hover:bg-neg/90',
+  'danger-ghost': 'text-neg hover:bg-neg-soft',
+}
+
+const sizeClasses: Record<ButtonSize, string> = {
+  sm: 'h-8 px-3 text-[12px]',
+  md: 'h-9 px-4 text-[13px]',
+  lg: 'h-10 px-5 text-[14px]',
 }
 
 export function Button({
-  variant = 'primary',
+  kind = 'secondary',
   size = 'md',
   className = '',
   children,
   ...props
 }: ButtonProps) {
-  const variantClass = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
-  }[variant]
-
-  const sizeClass = {
-    sm: 'px-3 py-1 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
-  }[size]
-
   return (
     <button
-      className={`rounded font-medium transition-colors disabled:opacity-50 ${variantClass} ${sizeClass} ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 font-medium rounded-md transition-colors disabled:opacity-50 cursor-default ${kindClasses[kind]} ${sizeClasses[size]} ${className}`}
       {...props}
     >
       {children}

@@ -1,24 +1,28 @@
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string
+  hint?: string
   error?: string
 }
 
-export function Input({ label, error, className = '', id, ...props }: InputProps) {
+export function Input({ label, hint, error, className = '', id, ...props }: InputProps) {
   return (
-    <div className="flex flex-col gap-1">
+    <label className={`flex flex-col gap-1.5 ${className}`}>
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-gray-700">
-          {label}
-        </label>
+        <span className="text-[12px] font-medium text-ink-2">{label}</span>
       )}
-      <input
-        id={id}
-        className={`border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          error ? 'border-red-500' : 'border-gray-300'
-        } ${className}`}
-        {...props}
-      />
-      {error && <p className="text-xs text-red-500">{error}</p>}
-    </div>
+      <div
+        className={`relative h-10 rounded-md border bg-surface flex items-center ${
+          error ? 'border-neg' : 'border-line-strong focus-within:border-felt'
+        }`}
+      >
+        <input
+          id={id}
+          className="flex-1 h-full px-3 text-[13px] text-ink-1 bg-transparent outline-none placeholder:text-ink-3"
+          {...props}
+        />
+      </div>
+      {hint && !error && <span className="text-[11px] text-ink-3">{hint}</span>}
+      {error && <span className="text-[11px] text-neg">{error}</span>}
+    </label>
   )
 }

@@ -8,8 +8,36 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Colors */
+  --color-paper: #fafaf7;
+  --color-surface: #ffffff;
+  --color-line: #e8e5dc;
+  --color-line-strong: #d4d1c8;
+  --color-ink-1: #1a1a1a;
+  --color-ink-2: #52524d;
+  --color-ink-3: #9a978f;
+  --color-felt: #0e5a3c;
+  --color-felt-soft: #e8f0eb;
+  --color-felt-deep: #0a4530;
+  --color-neg: #c8312b;
+  --color-neg-soft: #fbeae8;
+  --color-gold: #a8893a;
+  --color-gold-soft: #f5eed8;
+
+  /* Fonts */
+  --font-sans: var(--font-noto-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(20, 18, 12, 0.04), 0 1px 1px rgba(20, 18, 12, 0.03);
+  --shadow-pop: 0 4px 16px rgba(20, 18, 12, 0.08), 0 1px 2px rgba(20, 18, 12, 0.04);
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
 }
 
 @media (prefers-color-scheme: dark) {
