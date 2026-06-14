@@ -1,8 +1,25 @@
-export default function ResultsPage() {
+import { getDailyGames, getTotalStats } from '@/lib/results'
+
+import { ResultsTabs } from './_components/ResultsTabs'
+
+type Props = {
+  searchParams: Promise<{ tab?: string; date?: string }>
+}
+
+export default async function ResultsPage({ searchParams }: Props) {
+  const params = await searchParams
+  const tab = params.tab === 'total' ? 'total' : 'daily'
+  const date = params.date
+
+  const [daily, total] = await Promise.all([
+    tab === 'daily' ? getDailyGames(date) : Promise.resolve([]),
+    tab === 'total' ? getTotalStats() : Promise.resolve([]),
+  ])
+
   return (
-    <div>
-      <h1 className="mb-4 text-2xl font-bold">対戦結果</h1>
-      <p className="text-gray-500">対戦結果一覧を実装予定</p>
+    <div className="flex flex-col gap-5">
+      <h1 className="text-ink-1 text-xl font-bold">成績</h1>
+      <ResultsTabs tab={tab} date={date} daily={daily} total={total} />
     </div>
   )
 }
