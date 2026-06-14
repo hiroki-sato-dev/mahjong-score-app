@@ -1,0 +1,11 @@
+.next/
+out/
+build/
+node_modules/
+coverage/
+public/
+prisma/migrations/
+docs/design/hi-fi/
+package-lock.json
+*.min.js
+*.min.css

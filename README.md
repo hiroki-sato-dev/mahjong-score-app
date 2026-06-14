@@ -11,14 +11,14 @@
 
 ## 技術スタック
 
-| 項目 | 技術 |
-|---|---|
-| フレームワーク | Next.js (App Router) |
-| 言語 | TypeScript |
-| スタイリング | Tailwind CSS + SCSS |
-| 状態管理 | Zustand |
-| テスト | Vitest + React Testing Library |
-| DB | PostgreSQL + Prisma |
+| 項目           | 技術                           |
+| -------------- | ------------------------------ |
+| フレームワーク | Next.js (App Router)           |
+| 言語           | TypeScript                     |
+| スタイリング   | Tailwind CSS + SCSS            |
+| 状態管理       | Zustand                        |
+| テスト         | Vitest + React Testing Library |
+| DB             | PostgreSQL + Prisma            |
 
 ## セットアップ
 

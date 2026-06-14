@@ -14,8 +14,8 @@ export function Header({ navItems, variant = 'default', title }: HeaderProps) {
 
   return (
     <header className={`px-4 py-3 ${bgClass}`}>
-      <nav className="max-w-4xl mx-auto flex gap-4 items-center">
-        {title && <span className="font-bold mr-4">{title}</span>}
+      <nav className="mx-auto flex max-w-4xl items-center gap-4">
+        {title && <span className="mr-4 font-bold">{title}</span>}
         {navItems.map((item) => (
           <a key={item.href} href={item.href}>
             {item.label}
