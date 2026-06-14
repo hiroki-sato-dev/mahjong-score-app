@@ -76,7 +76,8 @@ model Score {
   userId     String
   gameId     String
   rawScore   Int
-  finalScore Int
+  subScore   Int    @default(0) // 素点P（千点単位、ウマ込み）
+  finalScore Int                 // 最終P = subScore × 50 + chipCount × 100
   rank       Int
   chipCount  Int    @default(0)
 

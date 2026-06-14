@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/Card'
 import { Chip } from '@/components/ui/Chip'
 import { getRanking } from '@/lib/aggregate'
+import { formatSignedP } from '@/lib/format'
 
 import { RankingChart } from './_components/RankingChart'
 
@@ -37,10 +38,11 @@ export default async function RankingPage() {
                 r.totalPoints >= 0 ? 'text-felt' : 'text-neg'
               }`}
             >
-              {r.totalPoints > 0 ? `+${r.totalPoints}` : r.totalPoints}
+              {formatSignedP(r.totalPoints, '')}
             </span>
             <span className="text-ink-3 text-[11px]">
-              {r.gamesPlayed}戦 / 平均 {r.averagePoints}P
+              素点P {formatSignedP(r.totalSubScore, '')} / {r.gamesPlayed}戦 / 平均P{' '}
+              {formatSignedP(r.averagePoints, '')}
             </span>
           </Card>
         ))}
@@ -59,9 +61,10 @@ export default async function RankingPage() {
               <tr className="border-line text-ink-3 border-b text-left">
                 <th className="px-2 py-2 font-medium">順位</th>
                 <th className="px-2 py-2 font-medium">部員</th>
-                <th className="px-2 py-2 text-right font-medium">累計</th>
+                <th className="px-2 py-2 text-right font-medium">累計 素点P</th>
+                <th className="px-2 py-2 text-right font-medium">累計 P</th>
                 <th className="px-2 py-2 text-right font-medium">試合</th>
-                <th className="px-2 py-2 text-right font-medium">平均</th>
+                <th className="px-2 py-2 text-right font-medium">平均P</th>
               </tr>
             </thead>
             <tbody>
@@ -71,10 +74,17 @@ export default async function RankingPage() {
                   <td className="text-ink-1 px-2 py-2 font-medium">{r.name}</td>
                   <td
                     className={`num px-2 py-2 text-right tabular-nums ${
+                      r.totalSubScore >= 0 ? 'text-felt' : 'text-neg'
+                    }`}
+                  >
+                    {formatSignedP(r.totalSubScore, '')}
+                  </td>
+                  <td
+                    className={`num px-2 py-2 text-right tabular-nums ${
                       r.totalPoints >= 0 ? 'text-felt' : 'text-neg'
                     }`}
                   >
-                    {r.totalPoints > 0 ? `+${r.totalPoints}` : r.totalPoints}
+                    {formatSignedP(r.totalPoints, '')}
                   </td>
                   <td className="text-ink-2 num px-2 py-2 text-right tabular-nums">
                     {r.gamesPlayed}
@@ -84,7 +94,7 @@ export default async function RankingPage() {
                       r.averagePoints >= 0 ? 'text-felt' : 'text-neg'
                     }`}
                   >
-                    {r.averagePoints > 0 ? `+${r.averagePoints}` : r.averagePoints}
+                    {formatSignedP(r.averagePoints, '')}
                   </td>
                 </tr>
               ))}

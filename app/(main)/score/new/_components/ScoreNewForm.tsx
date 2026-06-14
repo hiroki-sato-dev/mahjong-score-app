@@ -7,8 +7,8 @@ import { Card } from '@/components/ui/Card'
 import { Field } from '@/components/ui/Field'
 import { Input } from '@/components/ui/Input'
 import { NumField } from '@/components/ui/NumField'
-import { Stat } from '@/components/ui/Stat'
 import { Toggle } from '@/components/ui/Toggle'
+import { formatSignedP } from '@/lib/format'
 import { calcPoints } from '@/lib/points'
 
 import { saveScore } from '../actions'
@@ -96,9 +96,9 @@ export function ScoreNewForm({ members }: Props) {
         {seats.map((seat, idx) => (
           <div
             key={idx}
-            className="border-line bg-paper grid grid-cols-1 gap-3 rounded-md border p-3 md:grid-cols-[56px_minmax(200px,1fr)_160px_140px] md:items-end"
+            className="border-line bg-paper grid grid-cols-1 gap-x-3 gap-y-3 rounded-md border p-3 md:grid-cols-[56px_minmax(200px,1fr)_150px_150px]"
           >
-            <div className="bg-felt text-surface flex h-10 items-center justify-center self-end rounded-md text-[14px] font-bold">
+            <div className="bg-felt text-surface mt-[22px] flex h-10 items-center justify-center rounded-md text-[14px] font-bold">
               {SEAT_LABELS[idx]}
             </div>
             <Field label="部員">
@@ -149,17 +149,41 @@ export function ScoreNewForm({ members }: Props) {
           </span>
         </div>
         {preview && (
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {preview.map((p, idx) => {
+          <div className="grid grid-cols-1 gap-2">
+            <div className="text-ink-3 grid grid-cols-[40px_1fr_80px_80px_100px] gap-2 px-3 text-[11px] font-medium">
+              <span>順位</span>
+              <span>部員</span>
+              <span className="text-right">素点</span>
+              <span className="text-right">素点P</span>
+              <span className="text-right">最終P</span>
+            </div>
+            {preview.map((p) => {
               const member = members.find((m) => m.id === p.userId)
               return (
-                <Stat
-                  key={idx}
-                  label={`${p.rank}着 / ${member?.name ?? ''}`}
-                  value={p.finalScore > 0 ? `+${p.finalScore}` : `${p.finalScore}`}
-                  unit="P"
-                  tone={p.finalScore >= 0 ? 'pos' : 'neg'}
-                />
+                <div
+                  key={p.userId}
+                  className="border-line bg-paper grid grid-cols-[40px_1fr_80px_80px_100px] items-center gap-2 rounded-md border px-3 py-2"
+                >
+                  <span className="text-ink-1 text-[13px] font-semibold">{p.rank}着</span>
+                  <span className="text-ink-1 text-[13px]">{member?.name}</span>
+                  <span className="num text-ink-2 text-right text-[12px] tabular-nums">
+                    {p.rawScore.toLocaleString()}
+                  </span>
+                  <span
+                    className={`num text-right text-[14px] font-semibold tabular-nums ${
+                      p.subScore > 0 ? 'text-felt' : p.subScore < 0 ? 'text-neg' : 'text-ink-2'
+                    }`}
+                  >
+                    {formatSignedP(p.subScore, '')}
+                  </span>
+                  <span
+                    className={`num text-right text-[14px] font-semibold tabular-nums ${
+                      p.finalScore > 0 ? 'text-felt' : p.finalScore < 0 ? 'text-neg' : 'text-ink-2'
+                    }`}
+                  >
+                    {formatSignedP(p.finalScore)}
+                  </span>
+                </div>
               )
             })}
           </div>

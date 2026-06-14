@@ -16,6 +16,7 @@ import {
 
 import { Card } from '@/components/ui/Card'
 import { Stat } from '@/components/ui/Stat'
+import { formatSignedP } from '@/lib/format'
 import type { TotalRow } from '@/lib/results'
 
 type Props = {
@@ -71,17 +72,27 @@ export function TotalView({ rows }: Props) {
             <h3 className="text-ink-1 mb-3 text-[14px] font-semibold">{r.name}</h3>
             <div className="mb-3 grid grid-cols-2 gap-2">
               <Stat
-                label="累計P"
-                value={r.totalPoints > 0 ? `+${r.totalPoints}` : `${r.totalPoints}`}
+                label="累計 素点P"
+                value={formatSignedP(r.totalSubScore, '')}
+                tone={r.totalSubScore >= 0 ? 'pos' : 'neg'}
+              />
+              <Stat
+                label="累計 P"
+                value={formatSignedP(r.totalPoints, '')}
                 tone={r.totalPoints >= 0 ? 'pos' : 'neg'}
               />
               <Stat label="試合数" value={r.gamesPlayed} unit="戦" />
+              <Stat label="1位率" value={r.firstRate} unit="%" />
               <Stat
-                label="平均"
-                value={r.averagePoints > 0 ? `+${r.averagePoints}` : `${r.averagePoints}`}
+                label="平均 素点P"
+                value={formatSignedP(r.averageSubScore, '')}
+                tone={r.averageSubScore >= 0 ? 'pos' : 'neg'}
+              />
+              <Stat
+                label="平均 P"
+                value={formatSignedP(r.averagePoints, '')}
                 tone={r.averagePoints >= 0 ? 'pos' : 'neg'}
               />
-              <Stat label="1位率" value={r.firstRate} unit="%" />
             </div>
             <div className="text-ink-3 mb-2 text-[11px] font-medium">順位分布</div>
             <ResponsiveContainer width="100%" height={120}>

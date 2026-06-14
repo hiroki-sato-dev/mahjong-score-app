@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/Card'
 import { Chip } from '@/components/ui/Chip'
+import { formatSignedP } from '@/lib/format'
 import { prisma } from '@/lib/prisma'
 
 import { DeleteGameButton } from './_components/DeleteGameButton'
@@ -37,25 +38,39 @@ export default async function AdminScoresPage() {
                 </div>
                 <DeleteGameButton gameId={g.id} />
               </div>
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              <div className="text-ink-3 mb-2 grid grid-cols-[60px_1fr_80px_70px_90px] gap-2 px-2 text-[11px] font-medium">
+                <span>順位</span>
+                <span>部員</span>
+                <span className="text-right">素点</span>
+                <span className="text-right">素点P</span>
+                <span className="text-right">P</span>
+              </div>
+              <div className="flex flex-col gap-1.5">
                 {g.scores.map((s) => (
                   <div
                     key={s.id}
-                    className="border-line flex items-center gap-2 rounded-md border p-2"
+                    className="border-line grid grid-cols-[60px_1fr_80px_70px_90px] items-center gap-2 rounded-md border px-2 py-1.5"
                   >
                     <Chip tone={RANK_TONE[s.rank - 1]} className="min-w-[40px] justify-center">
                       {s.rank}着
                     </Chip>
-                    <span className="text-ink-1 flex-1 text-[13px] font-medium">{s.user.name}</span>
-                    <span className="text-ink-2 num text-[12px] tabular-nums">
+                    <span className="text-ink-1 text-[13px] font-medium">{s.user.name}</span>
+                    <span className="text-ink-2 num text-right text-[12px] tabular-nums">
                       {s.rawScore.toLocaleString()}
                     </span>
                     <span
-                      className={`num min-w-[60px] text-right text-[14px] font-semibold tabular-nums ${
+                      className={`num text-right text-[13px] font-semibold tabular-nums ${
+                        s.subScore > 0 ? 'text-felt' : s.subScore < 0 ? 'text-neg' : 'text-ink-2'
+                      }`}
+                    >
+                      {formatSignedP(s.subScore, '')}
+                    </span>
+                    <span
+                      className={`num text-right text-[14px] font-semibold tabular-nums ${
                         s.finalScore >= 0 ? 'text-felt' : 'text-neg'
                       }`}
                     >
-                      {s.finalScore > 0 ? `+${s.finalScore}` : s.finalScore}P
+                      {formatSignedP(s.finalScore)}
                     </span>
                   </div>
                 ))}

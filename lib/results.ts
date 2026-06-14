@@ -9,6 +9,7 @@ export type DailyGame = {
     userName: string
     rank: number
     rawScore: number
+    subScore: number
     finalScore: number
   }[]
 }
@@ -16,8 +17,10 @@ export type DailyGame = {
 export type TotalRow = {
   userId: string
   name: string
+  totalSubScore: number
   totalPoints: number
   gamesPlayed: number
+  averageSubScore: number
   averagePoints: number
   firstRate: number
   bestScore: number
@@ -57,6 +60,7 @@ export async function getDailyGames(date?: string): Promise<DailyGame[]> {
       userName: s.user.name ?? '名無し',
       rank: s.rank,
       rawScore: s.rawScore,
+      subScore: s.subScore,
       finalScore: s.finalScore,
     })),
   }))
@@ -69,6 +73,7 @@ export async function getTotalStats(): Promise<TotalRow[]> {
       name: true,
       scores: {
         select: {
+          subScore: true,
           finalScore: true,
           rank: true,
           game: { select: { playedAt: true } },
@@ -87,6 +92,7 @@ export async function getTotalStats(): Promise<TotalRow[]> {
         return { gameIdx: i + 1, total: running, playedAt: s.game.playedAt }
       })
       const total = running
+      const totalSub = u.scores.reduce((sum, s) => sum + s.subScore, 0)
       const games = u.scores.length
       const firsts = u.scores.filter((s) => s.rank === 1).length
       const scores = u.scores.map((s) => s.finalScore)
@@ -98,8 +104,10 @@ export async function getTotalStats(): Promise<TotalRow[]> {
       return {
         userId: u.id,
         name: u.name ?? '名無し',
+        totalSubScore: totalSub,
         totalPoints: total,
         gamesPlayed: games,
+        averageSubScore: Math.round((totalSub / games) * 10) / 10,
         averagePoints: Math.round((total / games) * 10) / 10,
         firstRate: Math.round((firsts / games) * 1000) / 10,
         bestScore: Math.max(...scores),

@@ -46,6 +46,7 @@ export async function saveScore(input: SaveScoreInput) {
           return {
             userId: r.userId,
             rawScore: r.rawScore,
+            subScore: r.subScore,
             finalScore: r.finalScore,
             rank: r.rank,
             chipCount: input.withChip ? (inputScore?.chipCount ?? 0) : 0,

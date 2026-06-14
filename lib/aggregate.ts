@@ -7,7 +7,11 @@ export async function getMemberStats(): Promise<MemberStat[]> {
       id: true,
       name: true,
       scores: {
-        select: { finalScore: true, game: { select: { playedAt: true } } },
+        select: {
+          subScore: true,
+          finalScore: true,
+          game: { select: { playedAt: true } },
+        },
         orderBy: { game: { playedAt: 'desc' } },
       },
     },
@@ -15,13 +19,16 @@ export async function getMemberStats(): Promise<MemberStat[]> {
   })
 
   return users.map((u) => {
+    const totalSub = u.scores.reduce((sum, s) => sum + s.subScore, 0)
     const total = u.scores.reduce((sum, s) => sum + s.finalScore, 0)
     const games = u.scores.length
     return {
       userId: u.id,
       name: u.name ?? '名無し',
+      totalSubScore: totalSub,
       totalPoints: total,
       gamesPlayed: games,
+      averageSubScore: games === 0 ? 0 : Math.round((totalSub / games) * 10) / 10,
       averagePoints: games === 0 ? 0 : Math.round((total / games) * 10) / 10,
       lastPlayedAt: u.scores[0]?.game.playedAt ?? null,
       recentScores: u.scores
@@ -40,8 +47,10 @@ export async function getRanking(): Promise<RankingRow[]> {
     .map((s) => ({
       userId: s.userId,
       name: s.name,
+      totalSubScore: s.totalSubScore,
       totalPoints: s.totalPoints,
       gamesPlayed: s.gamesPlayed,
+      averageSubScore: s.averageSubScore,
       averagePoints: s.averagePoints,
     }))
 }

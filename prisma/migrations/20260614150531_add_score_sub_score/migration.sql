@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Score" ADD COLUMN     "subScore" INTEGER NOT NULL DEFAULT 0;
