@@ -8,36 +8,36 @@
 
 ### カラー
 
-| トークン | 値 | 用途 |
-|---|---|---|
-| `paper` | `#fafaf7` | ページ背景 |
-| `surface` | `#ffffff` | カード・テーブル背景 |
-| `line` | `#e8e5dc` | 通常の境界線 |
-| `line-strong` | `#d4d1c8` | 強調境界線 |
-| `ink-1` | `#1a1a1a` | 見出し・主要テキスト |
-| `ink-2` | `#52524d` | 本文 |
-| `ink-3` | `#9a978f` | ラベル・補助テキスト |
-| `felt` | `#0e5a3c` | プライマリ・プラス収支 |
-| `felt-soft` | `#e8f0eb` | プライマリ淡 |
-| `felt-deep` | `#0a4530` | プライマリ暗 |
-| `neg` | `#c8312b` | マイナス収支・危険 |
-| `neg-soft` | `#fbeae8` | マイナス淡 |
-| `gold` | `#a8893a` | 1位アクセント |
-| `gold-soft` | `#f5eed8` | 1位淡 |
+| トークン      | 値        | 用途                   |
+| ------------- | --------- | ---------------------- |
+| `paper`       | `#fafaf7` | ページ背景             |
+| `surface`     | `#ffffff` | カード・テーブル背景   |
+| `line`        | `#e8e5dc` | 通常の境界線           |
+| `line-strong` | `#d4d1c8` | 強調境界線             |
+| `ink-1`       | `#1a1a1a` | 見出し・主要テキスト   |
+| `ink-2`       | `#52524d` | 本文                   |
+| `ink-3`       | `#9a978f` | ラベル・補助テキスト   |
+| `felt`        | `#0e5a3c` | プライマリ・プラス収支 |
+| `felt-soft`   | `#e8f0eb` | プライマリ淡           |
+| `felt-deep`   | `#0a4530` | プライマリ暗           |
+| `neg`         | `#c8312b` | マイナス収支・危険     |
+| `neg-soft`    | `#fbeae8` | マイナス淡             |
+| `gold`        | `#a8893a` | 1位アクセント          |
+| `gold-soft`   | `#f5eed8` | 1位淡                  |
 
 ### フォント
 
-| 用途 | フォント |
-|---|---|
-| UIテキスト全般 | Noto Sans JP (400/500/600/700) |
-| 数値・コード | JetBrains Mono (400/500/600) + `font-feature-settings: "tnum"` |
+| 用途           | フォント                                                       |
+| -------------- | -------------------------------------------------------------- |
+| UIテキスト全般 | Noto Sans JP (400/500/600/700)                                 |
+| 数値・コード   | JetBrains Mono (400/500/600) + `font-feature-settings: "tnum"` |
 
 ### 影
 
-| トークン | 用途 |
-|---|---|
-| `shadow-card` | カード・通常要素 |
-| `shadow-pop` | モーダル・ポップアップ |
+| トークン      | 用途                   |
+| ------------- | ---------------------- |
+| `shadow-card` | カード・通常要素       |
+| `shadow-pop`  | モーダル・ポップアップ |
 
 ### Tailwind v4 設定（`globals.css` の `@theme` に記述）
 
@@ -58,11 +58,11 @@
   --color-gold: #a8893a;
   --color-gold-soft: #f5eed8;
 
-  --font-sans: "Noto Sans JP", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: 'Noto Sans JP', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  --shadow-card: 0 1px 2px rgba(20,18,12,.04), 0 1px 1px rgba(20,18,12,.03);
-  --shadow-pop: 0 4px 16px rgba(20,18,12,.08), 0 1px 2px rgba(20,18,12,.04);
+  --shadow-card: 0 1px 2px rgba(20, 18, 12, 0.04), 0 1px 1px rgba(20, 18, 12, 0.03);
+  --shadow-pop: 0 4px 16px rgba(20, 18, 12, 0.08), 0 1px 2px rgba(20, 18, 12, 0.04);
 }
 ```
 
@@ -118,7 +118,7 @@ interface FieldProps {
 interface NumFieldProps {
   label?: string
   value?: number
-  suffix?: string   // 例: '点', '枚'
+  suffix?: string // 例: '点', '枚'
 }
 ```
 
@@ -160,11 +160,11 @@ interface ChipProps {
 
 ```typescript
 interface StatProps {
-  label: string       // 例: '累計ポイント'
-  value: string       // 整形済み文字列
-  sub?: string        // 例: '42 戦'
+  label: string // 例: '累計ポイント'
+  value: string // 整形済み文字列
+  sub?: string // 例: '42 戦'
   tone?: 'neutral' | 'pos' | 'neg' | 'gold'
-  big?: boolean       // 32px表示
+  big?: boolean // 32px表示
 }
 ```
 
@@ -175,7 +175,7 @@ interface CardProps {
   title?: string
   sub?: string
   action?: React.ReactNode
-  pad?: boolean       // default: true
+  pad?: boolean // default: true
   className?: string
   children: React.ReactNode
 }
@@ -188,20 +188,27 @@ interface CardProps {
 ### Logo `components/layout/Logo.tsx`
 
 ```typescript
-interface LogoProps { size?: number }  // default 20
+interface LogoProps {
+  size?: number
+} // default 20
 ```
 
 ### TopNav `components/layout/TopNav.tsx`
 
 ```typescript
-interface TopNavProps { role?: Role; name?: string }
+interface TopNavProps {
+  role?: Role
+  name?: string
+}
 // アクティブタブは usePathname() で判定
 ```
 
 ### AdminSidebar `components/layout/AdminSidebar.tsx`
 
 ```typescript
-interface AdminSidebarProps { active?: 'members' | 'scores' | 'settings' }
+interface AdminSidebarProps {
+  active?: 'members' | 'scores' | 'settings'
+}
 ```
 
 ---
@@ -244,32 +251,32 @@ export interface Member {
   name: string
   email: string
   role: Role
-  initial: string    // アバター用一文字
-  createdAt: string  // ISO 8601
+  initial: string // アバター用一文字
+  createdAt: string // ISO 8601
 }
 
 export interface Score {
   memberId: string
-  rawPoints: number  // 素点（例: 42300）
-  tipCount: number   // チップ枚数（本人分）
+  rawPoints: number // 素点（例: 42300）
+  tipCount: number // チップ枚数（本人分）
 }
 
 export interface Hanchan {
   id: string
-  playedAt: string   // ISO 8601
+  playedAt: string // ISO 8601
   hasTip: boolean
-  scores: Score[]    // 4人分
-  createdBy: string  // memberId
+  scores: Score[] // 4人分
+  createdBy: string // memberId
 }
 
 export interface ScoreResult {
   memberId: string
   rank: 1 | 2 | 3 | 4
   rawPoints: number
-  uma: number        // ±20, ±10
-  oka: number        // 1位のみ +30
+  uma: number // ±20, ±10
+  oka: number // 1位のみ +30
   tipP: number
-  total: number      // 最終P
+  total: number // 最終P
 }
 ```
 
@@ -278,10 +285,10 @@ export interface ScoreResult {
 ## ポイント計算ロジック `lib/points.ts`
 
 ```typescript
-const RETURN_POINT = 30000      // 返し
-const POINT_RATE  = 50 / 1000  // 1000点 = 50P
+const RETURN_POINT = 30000 // 返し
+const POINT_RATE = 50 / 1000 // 1000点 = 50P
 const UMA = [20, 10, -10, -20] // 1位〜4位
-const TIP_P = 100              // 1枚 = 100P
+const TIP_P = 100 // 1枚 = 100P
 
 export function calcPoints(scores: Score[], hasTip: boolean): ScoreResult[] {
   const ranked = [...scores].sort((a, b) => b.rawPoints - a.rawPoints)
@@ -289,13 +296,16 @@ export function calcPoints(scores: Score[], hasTip: boolean): ScoreResult[] {
   return ranked.map((s, i) => {
     const rank = (i + 1) as 1 | 2 | 3 | 4
     const base = (s.rawPoints - RETURN_POINT) * POINT_RATE
-    const oka  = rank === 1 ? 30 : 0
-    const uma  = UMA[i]
+    const oka = rank === 1 ? 30 : 0
+    const uma = UMA[i]
     const tipP = hasTip ? s.tipCount * TIP_P : 0
     return {
       memberId: s.memberId,
-      rank, rawPoints: s.rawPoints,
-      uma, oka, tipP,
+      rank,
+      rawPoints: s.rawPoints,
+      uma,
+      oka,
+      tipP,
       total: Math.round((base + uma + oka + tipP) * 10) / 10,
     }
   })
@@ -306,16 +316,16 @@ export function calcPoints(scores: Score[], hasTip: boolean): ScoreResult[] {
 
 ## ルーティング表
 
-| パス | レイアウト | 画面 | アクセス |
-|---|---|---|---|
-| `/login` | (none) | LoginScreen | 未認証 |
-| `/members` | (main) | MembersScreen | 全員 |
-| `/score/new` | (main) | ScoreInputScreen | 全員 |
-| `/results?tab=daily` | (main) | ResultsDailyScreen | 全員 |
-| `/results?tab=total` | (main) | ResultsTotalScreen | 全員 |
-| `/ranking` | (main) | RankingScreen | 全員 |
-| `/admin/members` | admin | AdminMembersScreen | 幹部のみ |
-| `/admin/scores` | admin | AdminScoresScreen | 幹部のみ |
+| パス                 | レイアウト | 画面               | アクセス |
+| -------------------- | ---------- | ------------------ | -------- |
+| `/login`             | (none)     | LoginScreen        | 未認証   |
+| `/members`           | (main)     | MembersScreen      | 全員     |
+| `/score/new`         | (main)     | ScoreInputScreen   | 全員     |
+| `/results?tab=daily` | (main)     | ResultsDailyScreen | 全員     |
+| `/results?tab=total` | (main)     | ResultsTotalScreen | 全員     |
+| `/ranking`           | (main)     | RankingScreen      | 全員     |
+| `/admin/members`     | admin      | AdminMembersScreen | 幹部のみ |
+| `/admin/scores`      | admin      | AdminScoresScreen  | 幹部のみ |
 
 ---
 
@@ -334,12 +344,12 @@ stores/
 
 `docs/design/hi-fi/` に以下が入っている（ブラウザで開いて視覚確認できる）：
 
-| ファイル | 内容 |
-|---|---|
-| `Hi-Fi Design.html` | 全画面の高解像度デザイン（PC版） |
-| `Component Handoff.html` | コンポーネント設計ドキュメント |
-| `hifi-components.jsx` | 共通コンポーネント・チャートの実装例 |
-| `hifi-screens-main.jsx` | ログイン〜ランキング画面 |
-| `hifi-screens-admin.jsx` | 幹部管理画面 |
-| `hifi-screens-misc.jsx` | 404・500・デザイントークン凡例 |
-| `hifi-mobile.jsx` | スマホ版全画面 |
+| ファイル                 | 内容                                 |
+| ------------------------ | ------------------------------------ |
+| `Hi-Fi Design.html`      | 全画面の高解像度デザイン（PC版）     |
+| `Component Handoff.html` | コンポーネント設計ドキュメント       |
+| `hifi-components.jsx`    | 共通コンポーネント・チャートの実装例 |
+| `hifi-screens-main.jsx`  | ログイン〜ランキング画面             |
+| `hifi-screens-admin.jsx` | 幹部管理画面                         |
+| `hifi-screens-misc.jsx`  | 404・500・デザイントークン凡例       |
+| `hifi-mobile.jsx`        | スマホ版全画面                       |
